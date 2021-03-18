@@ -1,6 +1,7 @@
 <h1>Editing Tweeet</h1>
 
 <%= render 'form', tweeet: @tweeet %>
-
-<%= link_to 'Show', @tweeet %> |
-<%= link_to 'Back', tweeets_path %>
+<div class="mt-3">
+  <%= link_to 'Show', @tweeet , class: "btn btn-primary"%> |
+  <%= link_to 'Back', tweeets_path , class: "btn btn-dark"%>
+</div>

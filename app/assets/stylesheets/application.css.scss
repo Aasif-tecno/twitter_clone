@@ -28,6 +28,9 @@
     .card-header{
      background-color: #1DA1F2;
     }
+    .card-footer{
+        background-color: #fff;
+    }
 
     }
 
@@ -46,9 +49,21 @@
 }
 .card-user{
     border-radius: 20px;
-    height: 50px;
+    height: 60px;
     box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
 &:hover{
 box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
 }
+}
+.gravatar-img{
+    width: 70px;
+    height: 70px;
+}
+.gravatar-img-user{
+    width: 35px;
+    height: 35px;
+}
+.gravatar-img-tweet{
+    width: 55px;
+    height: 55px;
 }
