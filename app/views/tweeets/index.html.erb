@@ -1,27 +1,70 @@
-<p id="notice"><%= notice %></p>
+<div class="row mt-4">
+  <% if user_signed_in? %>
+    <div class="col-md-3">
+      <div class="card card-index mb-3 shadow">
+        <div class="card-header">
+          <h3><%= current_user.fullname %> </h3>
+        </div>
+        <div class="card-body">
+           <p>@<%= current_user.username%></p>
+           
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+  <% else %>
+    <div class="col-md-9">
+  <% end %>
+    <div class="card card-trends shadow mb-3">
+      <div class="card-header">
+        <h4>Trends</h4>
+        <%= form_with(model: @tweeet) do |form| %>
+        <div class="form-group">
+          <%= form.text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
+        </div>
+        <div class="form-group">
+          <%= form.submit "Tweet", class: "btn btn-dark" %>
+        </div>
+      <% end %>
 
-<h1>Tweeets</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Tweeet</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tweeets.each do |tweeet| %>
-      <tr>
-        <td><%= tweeet.tweeet %></td>
-        <td><%= link_to 'Show', tweeet %></td>
-        <td><%= link_to 'Edit', edit_tweeet_path(tweeet) %></td>
-        <td><%= link_to 'Destroy', tweeet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Tweeet', new_tweeet_path %>
+      </div>
+      <div class="p-3">
+      <% @tweeets.each do |tweeet| %>
+        <div class="card card-index-tweets mb-3">
+          <div class="row">
+            <div class="col-1">
+            </div>
+            <div class="col-11">
+              <%= link_to  tweeet do%>
+                <div class="card-body">
+                  <%= tweeet.tweeet %>
+                  <p class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card card-index mb-3 shadow">
+      <div class="card-header">
+        <h4>Who to follow</h4>
+      </div>
+      <div class="card-body">
+       <div class="input-group mb-3">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" />
+        <button type="button" class="btn btn-primary">search</button>
+      </div>
+      <% @user.each do |user| %>
+        <div class="card-user mb-3 p-3">
+          <span><%= user.fullname  %></span>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

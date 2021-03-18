@@ -13,3 +13,42 @@
  *= require_tree .
  *= require_self
  */
+ @import "font-awesome";
+
+
+ .navbar{
+     background-color: #1DA1F2;
+     a{
+     color: #fff;
+     }
+ }
+
+
+.card-index{
+    .card-header{
+     background-color: #1DA1F2;
+    }
+
+    }
+
+.card-trends{
+    .card-header{
+        background-color: #1DA1F2;
+       }
+}
+.card-index-tweets{
+    border-radius: 12px;
+    box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+    &:hover{
+    box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+    }
+
+}
+.card-user{
+    border-radius: 20px;
+    height: 50px;
+    box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+&:hover{
+box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+}
+}
