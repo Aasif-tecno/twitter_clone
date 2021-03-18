@@ -53,7 +53,7 @@ group :development do
   gem 'guard-livereload', '~> 2.5', '>= 2.5.2', require: false
 end
 
-gem :production do 
+group :production do 
   gem 'pg'
 end
 group :test do
