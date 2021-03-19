@@ -4,11 +4,7 @@ class TweeetsController < ApplicationController
 
   # GET /tweeets or /tweeets.json
   def index
-    if user_signed_in? 
       @tweeets = current_user.tweeets.all.order(created_at: :desc)
-    else
-      @tweeets = Tweeet.all.order(created_at: :desc)
-    end
       @tweeet = Tweeet.new
     @user = User.last(10)
   end
@@ -71,6 +67,6 @@ class TweeetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweeet_params
-      params.require(:tweeet).permit(:tweeet)
+      params.require(:tweeet).permit(:tweeet, :tweeet_image)
     end
 end

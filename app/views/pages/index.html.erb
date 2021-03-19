@@ -1,0 +1,79 @@
+<div class="row mt-5">
+  <div class="col-md-9">
+    <div class="card card-trends shadow mb-3 border-primary">
+      <div class="card-header">
+        <h4>Tweets</h4>
+        <div class="img-fluid rounded">
+        </div>
+      </div>
+      <div class="p-3">
+      <% @tweeets.each do |tweeet| %>
+        <div class="mb-4">
+          <div class="row ml-2">
+            <div class="col-2 pt-1">
+              <% if tweeet.user.avatar.present? %>
+                <div class="user-image-tweeet">
+                  <%= image_tag tweeet.user.avatar %>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-10">
+                <strong><%= tweeet.user.fullname %></strong><br>
+                <small>@<%= tweeet.user.username %></small>
+              <div class="card p-4 mt-2 card-index-tweets">
+                <div class="card-body">
+                  <%= tweeet.tweeet %><br><br>
+                     <% if tweeet.tweeet_image.present? %>
+                      <div class="mb-3 tweeet-image">
+                        <%= image_tag(tweeet.tweeet_image) %>
+                      </div>
+                    <% end %><br>
+                  <small class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
+                  </div><hr>
+                  <div class="d-flex justify-content-between">
+                    <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
+                    <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
+                    <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
+                    <%= fa_icon "share" %>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card card-index mb-3 shadow">
+      <div class="card-header">
+        <h4>Who to follow</h4>
+      </div>
+      <div class="card-body">
+       <div class="input-group mb-3">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" />
+        <button type="button" class="btn btn-primary">search</button>
+      </div>
+      <% @user.each do |user| %>
+        <div class="card card-user mb-3 p-2">
+          <div class="row">
+            <div class="col-2">
+              <% if user.avatar.present? %>
+                <div class="user-image">
+                  <%= image_tag user.avatar %>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-10">
+              <strong><%= user.fullname  %></strong><br>
+              <small class="text-secondary mt-0">@<%= user.username  %></small>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

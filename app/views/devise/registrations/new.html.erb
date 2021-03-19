@@ -9,14 +9,11 @@
     <%= f.label :username %>
     <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control' %>
   </div>
-  <%
-=begin%>
+
  <div class="form-group">
     <%= f.label :avatar %>
     <%= f.file_field :avatar, class: 'form-control' %>
   </div> 
-<%
-=end%>
   <div class="form-group">
     <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>

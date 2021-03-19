@@ -14,16 +14,8 @@
       
     <ul class="navbar-nav ml-auto">
     <% if user_signed_in? %>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Account
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item"%>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+      <li class="nav-item">
+        <%= link_to "Dashboard", tweeets_path, class: "nav-link"  %>
       </li>
       <li class="nav-item">
         <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger"  %>

@@ -8,13 +8,18 @@
         <div class="card-body">
           <div class="row">
             <div class="col-4">
-              <%= gravatar_image_tag(current_user.email, class: 'rounded-circle gravatar-img', size:  15 )%>
+              <% if current_user.avatar.present? %>
+                <div class="user-image-dash">
+                  <%= image_tag current_user.avatar %>
+                </div>
+              <% end %>
             </div>
             <div class="col-8">
               <strong><%= current_user.fullname %> </Strong><br>
               <small>@<%= current_user.username%></small>
             </div>
           </div>
+          <%= link_to "Edit", edit_user_registration_path, class: "btn btn-warning" %>
         </div>
           <div class="card-footer">
             <table class="table-borderless">
@@ -45,6 +50,9 @@
               <%= form.text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
             </div>
             <div class="form-group">
+              <%= form.file_field :tweeet_image, class: "form-control-file"%>
+            </div>
+            <div class="form-group">
               <%= form.submit "Tweet", class: "btn btn-dark" %>
             </div>
           <% end %>
@@ -54,18 +62,27 @@
       </div>
       <div class="p-3">
       <% @tweeets.each do |tweeet| %>
-        <div class="card card-index-tweets mb-4">
+        <div class="mb-2">
           <div class="row ml-2">
-            <div class="col-1 pt-3">
-              <%= gravatar_image_tag(tweeet.user.email, size: 50, class: "rounded-circle  gravatar-img-tweet")%>
+            <div class="col-1 pt-1">
+              <% if tweeet.user.avatar.present? %>
+                <div class="user-image-tweeet">
+                  <%= image_tag tweeet.user.avatar %>
+                </div>
+              <% end %>
             </div>
             <div class="col-11">
-              <div class="card-body">
-                <strong><%= tweeet.user.fullname %></strong><br>
-                <small>@<%= tweeet.user.username %></small>
-                <hr><br>
-                  <%= tweeet.tweeet %><br>
-                  <small class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
+              <strong><%= tweeet.user.fullname %></strong><br>
+              <small>@<%= tweeet.user.username %></small>
+              <div class="card p-4 mt-2 card-index-tweets">
+                <div class="card-body">
+                  <%= tweeet.tweeet %><br><br>
+                  <% if tweeet.tweeet_image.present? %>
+                    <div class="mb-3 tweeet-image">
+                      <%= image_tag(tweeet.tweeet_image) %>
+                    </div>
+                  <% end %><br>
+                  <small class="text-secondary text-right"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
                   <%if @tweeet.user = current_user %>
                     <div class="d-flex justify-content-between mt-3">
                       <div>
@@ -84,16 +101,18 @@
                         <% end %>
                       </div>
                     </div>
-                  <%end %>
+                  <%end %><hr>
                   <div class="d-flex justify-content-between mt-3">
                     <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
                     <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
                     <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
                     <%= fa_icon "share" %>
                   </div>
+                </div>
               </div>
             </div>
           </div>
+          <hr>
         </div>
       <% end %>
       </div>
@@ -114,7 +133,11 @@
         <div class="card card-user mb-3 p-2">
           <div class="row">
             <div class="col-2">
-              <%= gravatar_image_tag(user.email, size: 50, class: "rounded-circle  gravatar-img-user")%>
+               <% if user.avatar.present? %>
+                <div class="user-image">
+                  <%= image_tag user.avatar %>
+                </div>
+              <% end %>
             </div>
             <div class="col-10">
               <strong><%= user.fullname  %></strong><br>

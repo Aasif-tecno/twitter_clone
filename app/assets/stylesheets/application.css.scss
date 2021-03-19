@@ -14,6 +14,8 @@
  *= require_self
  */
  @import "font-awesome";
+ @import "./actiontext.scss";
+
 
 
  .navbar{
@@ -27,6 +29,7 @@
 .card-index{
     .card-header{
      background-color: #1DA1F2;
+     color: #fff;
     }
     .card-footer{
         background-color: #fff;
@@ -37,10 +40,12 @@
 .card-trends{
     .card-header{
         background-color: #1DA1F2;
+     color: #fff;
+
        }
 }
 .card-index-tweets{
-    border-radius: 12px;
+    border-radius: 15px;
     box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
     &:hover{
     box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
@@ -55,15 +60,33 @@
 box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
 }
 }
-.gravatar-img{
+.user-image-dash{
+    img{
     width: 70px;
     height: 70px;
+    border-radius: 50%;
+
+    }
 }
-.gravatar-img-user{
+.user-image{
+    img{
     width: 35px;
     height: 35px;
+    border-radius: 50%;
+    }
 }
-.gravatar-img-tweet{
+.user-image-tweeet{
+    img{
     width: 55px;
     height: 55px;
+    border-radius: 50%;
+
+    }
+}
+.tweeet-image{
+    img{
+    width: 80%;
+    height: 80%;
+    border-radius: 15px;
+    }
 }
