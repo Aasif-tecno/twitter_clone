@@ -1,9 +1,39 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Tweeet:</strong>
-  <%= @tweeet.tweeet %>
-</p>
-
-<%= link_to 'Edit', edit_tweeet_path(@tweeet) %> |
-<%= link_to 'Back', tweeets_path %>
+<div class="card mt-3 mb-5">
+  <div class="row m-5">
+    <div class="col-1 pt-1">
+      <% if @tweeet.user.avatar.present? %>
+        <div class="user-image-tweeet pl-2">
+          <%= image_tag @tweeet.user.avatar %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-11">
+      <strong><%= @tweeet.user.fullname %></strong><br>
+      <small>@<%= @tweeet.user.username %></small>
+      <div class="card p-4 mt-2 card-index-tweets">
+        <div class="card-body">
+          <%= @tweeet.tweeet %><br><br>
+          <% if @tweeet.tweeet_image.present? %>
+            <div class="mb-3 tweeet-image">
+              <%= image_tag(@tweeet.tweeet_image) %>
+            </div>
+          <% end %><br>
+          <small class="text-secondary text-right"><%= time_ago_in_words(@tweeet.created_at) %> ago</small><br><hr>
+          <div class="d-flex justify-content-between mt-3">
+            <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
+            <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
+            <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
+            <%= fa_icon "share" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br>
+  <hr>
+  <div>
+    <div class="card-body">
+      <div class="card-title"><h3>Comments</h3></div>
+      
+    </div>
+  </div>
+</div>

@@ -23,6 +23,8 @@
      a{
      color: #fff;
      }
+    .navbar-toggler-icon{
+     }
  }
 
 
@@ -53,7 +55,7 @@
 
 }
 .card-user{
-    border-radius: 20px;
+    border-radius: 12px;
     height: 60px;
     box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
 &:hover{
@@ -77,16 +79,23 @@ box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
 }
 .user-image-tweeet{
     img{
-    width: 55px;
-    height: 55px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
 
     }
 }
+.search-user-image{
+    img{
+        width: 70%;
+        border-radius: 20px;
+        background-position: center;
+    }
+}
 .tweeet-image{
     img{
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     border-radius: 15px;
     }
 }

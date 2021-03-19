@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   root 'pages#index'
   get 'user/:id', to: 'pages#dashboard', as: 'user'
+  get '/search', to: 'pages#search', as: 'search'
   devise_for :users
   resources :tweeets
 

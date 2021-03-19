@@ -1,0 +1,24 @@
+
+  <% @friends.each do |user| %>
+    <%= link_to  user_path(user.id), class: "text-decoration-none text-dark" do %>
+    <div class="card card-index-tweets mb-3">
+      <div class="row">
+        <div class="col-4">
+          <% if user.avatar.present? %>
+            <div class="card-body search-user-image">
+                <%= image_tag user.avatar %>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-8">
+          <div class="card-body">
+            <div class="card-title"><h3><%= user.fullname %></h3></div>
+            <p>@<%= user.username %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% end %>
+
+

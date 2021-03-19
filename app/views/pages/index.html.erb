@@ -18,17 +18,19 @@
               <% end %>
             </div>
             <div class="col-10">
-                <strong><%= tweeet.user.fullname %></strong><br>
-                <small>@<%= tweeet.user.username %></small>
-              <div class="card p-4 mt-2 card-index-tweets">
-                <div class="card-body">
-                  <%= tweeet.tweeet %><br><br>
-                     <% if tweeet.tweeet_image.present? %>
+            <%= link_to  user_path(tweeet.user.id), class: "text-decoration-none text-dark" do %>
+              <strong><%= tweeet.user.fullname %></strong><br>
+            <% end %>
+              <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
+              <%= link_to tweeet_path(tweeet), class: "text-decoration-none text-dark" do %>
+                <div class="card p-4 mt-2 card-index-tweets">
+                  <div class="card-body">
+                    <%= tweeet.tweeet %><br><br>
+                    <% if tweeet.tweeet_image.present? %>
                       <div class="mb-3 tweeet-image">
                         <%= image_tag(tweeet.tweeet_image) %>
                       </div>
                     <% end %><br>
-                  <small class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
                   </div><hr>
                   <div class="d-flex justify-content-between">
                     <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
@@ -36,7 +38,8 @@
                     <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
                     <%= fa_icon "share" %>
                   </div>
-              </div>
+                </div>
+              <% end %>
             </div>
           </div>
           <hr>
@@ -51,11 +54,6 @@
         <h4>Who to follow</h4>
       </div>
       <div class="card-body">
-       <div class="input-group mb-3">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-        <button type="button" class="btn btn-primary">search</button>
-      </div>
       <% @user.each do |user| %>
       <%= link_to  user_path(user.id), class: "text-decoration-none text-dark" do %>
         <div class="card card-user mb-3 p-2">

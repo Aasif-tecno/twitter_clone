@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar bg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
   <%= link_to "Twitter", root_path, class: "navbar-brand" %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,9 @@
       <li class="nav-item">
         <%= link_to "Dashboard", tweeets_path, class: "nav-link"  %>
       </li>
+      <li class="nav-item">
+        <%= link_to "New Tweet", tweeets_path, class: "btn btn-success mr-2"  %>
+      </li> 
       <li class="nav-item">
         <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger"  %>
       </li>

@@ -1,6 +1,5 @@
 <div class="row mt-4">
-  <% if user_signed_in? %>
-    <div class="col-md-3">
+    <div class="col-md-5">
       <div class="card card-index mb-3 shadow">
         <div class="card-header">
             <h4>Profile</h4>
@@ -19,35 +18,62 @@
               <small>@<%= current_user.username%></small>
             </div>
           </div>
-          <%= link_to "Edit", edit_user_registration_path, class: "btn btn-warning" %>
+          <%= link_to "Edit", edit_user_registration_path, class: "btn btn-warning mt-4" %>
         </div>
-          <div class="card-footer">
-            <table class="table-borderless">
-              <tr>
-                <th>Tweets</th>
-                <th>Following</th>
-                <th>Followers</th>
-              </tr>
-              <tr class="text-center">
-                <td><%= current_user.tweeets.count%></td>
-                <td>323</td>
-                <td>1.4m</td>
-              </tr>
-            </table>
+        <hr>
+        <div class="ml-5 mr-5 mb-3">
+          <div class="d-flex justify-content-between">
+            <strong>Tweets</strong>
+            <strong>Following</strong>
+            <strong>Followers</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span><%= current_user.tweeets.count%></span>
+            <span>323</span>
+            <span>1.4m</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-  <% else %>
-    <div class="col-md-9">
-  <% end %>
+        <div class="card card-index mb-3 shadow">
+          <div class="card-header">
+            <h4>Who to follow</h4>
+          </div>
+          <div class="card-body">
+          <div class="input-group mb-3">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+              aria-describedby="search-addon" />
+            <button type="button" class="btn btn-primary">search</button>
+          </div>
+          <% @user.each do |user| %>
+          <%= link_to  user_path(user.id), class: "text-decoration-none text-dark" do %>
+            <div class="card card-user mb-3 p-2">
+              <div class="row">
+                <div class="col-2">
+                  <% if user.avatar.present? %>
+                    <div class="user-image">
+                      <%= image_tag user.avatar %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="col-10">
+                  <strong><%= user.fullname  %></strong><br>
+                  <small class="text-secondary mt-0">@<%= user.username  %></small>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    <div class="col-md-7">
     <div class="card card-trends shadow mb-3">
       <div class="card-header">
         <h4>Trends</h4>
         <% if user_signed_in? %>
           <%= form_with(model: @tweeet) do |form| %>
             <div class="form-group">
-              <%= form.text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
+              <%= form.rich_text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
             </div>
             <div class="form-group">
               <%= form.file_field :tweeet_image, class: "form-control-file"%>
@@ -64,16 +90,17 @@
       <% @tweeets.each do |tweeet| %>
         <div class="mb-2">
           <div class="row ml-2">
-            <div class="col-1 pt-1">
+            <div class="col-2 pt-1">
               <% if tweeet.user.avatar.present? %>
                 <div class="user-image-tweeet">
                   <%= image_tag tweeet.user.avatar %>
                 </div>
               <% end %>
             </div>
-            <div class="col-11">
+            <div class="col-10">
               <strong><%= tweeet.user.fullname %></strong><br>
-              <small>@<%= tweeet.user.username %></small>
+              <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
+
               <div class="card p-4 mt-2 card-index-tweets">
                 <div class="card-body">
                   <%= tweeet.tweeet %><br><br>
@@ -82,7 +109,6 @@
                       <%= image_tag(tweeet.tweeet_image) %>
                     </div>
                   <% end %><br>
-                  <small class="text-secondary text-right"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
                   <%if @tweeet.user = current_user %>
                     <div class="d-flex justify-content-between mt-3">
                       <div>
@@ -118,37 +144,5 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="card card-index mb-3 shadow">
-      <div class="card-header">
-        <h4>Who to follow</h4>
-      </div>
-      <div class="card-body">
-       <div class="input-group mb-3">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-        <button type="button" class="btn btn-primary">search</button>
-      </div>
-      <% @user.each do |user| %>
-      <%= link_to  user_path(user.id), class: "text-decoration-none text-dark" do %>
-        <div class="card card-user mb-3 p-2">
-          <div class="row">
-            <div class="col-2">
-               <% if user.avatar.present? %>
-                <div class="user-image">
-                  <%= image_tag user.avatar %>
-                </div>
-              <% end %>
-            </div>
-            <div class="col-10">
-              <strong><%= user.fullname  %></strong><br>
-              <small class="text-secondary mt-0">@<%= user.username  %></small>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <% end %>
-      </div>
-    </div>
-  </div>
+  
 </div>
