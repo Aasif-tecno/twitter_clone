@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   root 'pages#index'
-  get '/about', to: 'pages#about'
+  get 'user/:id', to: 'pages#dashboard', as: 'user'
   devise_for :users
   resources :tweeets
 

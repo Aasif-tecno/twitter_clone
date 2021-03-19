@@ -8,18 +8,18 @@
         <div class="card-body">
           <div class="row">
             <div class="col-4">
-              <% if current_user.avatar.present? %>
+              <% if @user.avatar.present? %>
                 <div class="user-image-dash">
-                  <%= image_tag current_user.avatar %>
+                  <%= image_tag @user.avatar %>
                 </div>
               <% end %>
             </div>
             <div class="col-8">
-              <strong><%= current_user.fullname %> </Strong><br>
-              <small>@<%= current_user.username%></small>
+              <strong><%= @user.fullname %> </Strong><br>
+              <small>@<%= @user.username%></small>
             </div>
-          </div>
-          <%= link_to "Edit", edit_user_registration_path, class: "btn btn-warning" %>
+          </div><br><br>
+          <%= link_to "Follow", tweeets_path, class: "btn btn-primary" %>
         </div>
           <div class="card-footer">
             <table class="table-borderless">
@@ -29,7 +29,7 @@
                 <th>Followers</th>
               </tr>
               <tr class="text-center">
-                <td><%= current_user.tweeets.count%></td>
+                <td><%= @user.tweeets.count%></td>
                 <td>323</td>
                 <td>1.4m</td>
               </tr>
@@ -44,19 +44,6 @@
     <div class="card card-trends shadow mb-3">
       <div class="card-header">
         <h4>Trends</h4>
-        <% if user_signed_in? %>
-          <%= form_with(model: @tweeet) do |form| %>
-            <div class="form-group">
-              <%= form.text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
-            </div>
-            <div class="form-group">
-              <%= form.file_field :tweeet_image, class: "form-control-file"%>
-            </div>
-            <div class="form-group">
-              <%= form.submit "Tweet", class: "btn btn-dark" %>
-            </div>
-          <% end %>
-        <% end %>
         <div class="img-fluid rounded">
         </div>
       </div>
@@ -82,26 +69,7 @@
                       <%= image_tag(tweeet.tweeet_image) %>
                     </div>
                   <% end %><br>
-                  <small class="text-secondary text-right"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br>
-                  <%if @tweeet.user = current_user %>
-                    <div class="d-flex justify-content-between mt-3">
-                      <div>
-                        <%= link_to tweeet_path(tweeet) do %>
-                        <%= fa_icon "paragraph" ,class: "btn btn-primary"%>
-                        <% end %>
-                      </div>
-                      <div>
-                        <%= link_to edit_tweeet_path(tweeet) do %>
-                        <%= fa_icon "pencil" ,class: "btn btn-warning"%>
-                        <% end %>
-                      </div>
-                      <div>
-                        <%= link_to tweeet_path(tweeet), method: :delete do %>
-                        <%= fa_icon "trash" ,class: "btn btn-danger"%>
-                        <% end %>
-                      </div>
-                    </div>
-                  <%end %><hr>
+                  <small class="text-secondary text-right"><%= time_ago_in_words(tweeet.created_at) %> ago</small><br><hr>
                   <div class="d-flex justify-content-between mt-3">
                     <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
                     <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
@@ -129,7 +97,7 @@
           aria-describedby="search-addon" />
         <button type="button" class="btn btn-primary">search</button>
       </div>
-      <% @user.each do |user| %>
+      <% @users.each do |user| %>
       <%= link_to  user_path(user.id), class: "text-decoration-none text-dark" do %>
         <div class="card card-user mb-3 p-2">
           <div class="row">
