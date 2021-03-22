@@ -28,8 +28,16 @@
                   </div>
                 <% end %><br>
               </div><hr>
-              <div class="d-flex justify-content-between px-3">
-                <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
+               <div class="d-flex justify-content-between px-4 mt-3">
+                <span>
+                <% if user_signed_in? %> 
+                  <% if tweeet.liked?(current_user)%>
+                    <%= link_to unlike_path(tweeet), method: :delete do %> <%= fa_icon "heart" %><%end%>
+                  <% else %>
+                    <%= link_to like_path(tweeet), method: "put" do %> <%= fa_icon "heart" %><%end%>
+                  <% end %>
+                <% end %>
+                  &nbsp&nbsp <%= tweeet.likes.count%></span>
                 <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
                 <span><%= fa_icon "comments" %> &nbsp&nbsp <%= tweeet.comments.count%></span>
               </div>

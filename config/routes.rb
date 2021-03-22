@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'likes/create'
+  get 'likes/destroy'
   root 'pages#index'
   get 'user/:id', to: 'pages#dashboard', as: 'user'
   get '/search', to: 'pages#search', as: 'search'
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
   post '/user/:id/unfollow', to: "follows#unfollow", as: "unfollow_user"
   devise_for :users
   delete 'tweeets/:tweeet_id/comment/:id', to: 'comments#destroy', as: "destroy_comment"
+  put 'tweeets/:id/like', to: 'likes#create', as: "like"
+  delete 'tweeets/:id/unlike', to: 'likes#destroy', as: "unlike"
   resources :tweeets do
     resources :comments
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_092749) do
+ActiveRecord::Schema.define(version: 2021_03_22_123338) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 2021_03_22_092749) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "tweeet_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tweeet_id"], name: "index_likes_on_tweeet_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "tweeets", force: :cascade do |t|
     t.text "tweeet"
     t.datetime "created_at", precision: 6, null: false
@@ -93,5 +102,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_092749) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "tweeets"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "tweeets"
+  add_foreign_key "likes", "users"
   add_foreign_key "tweeets", "users"
 end
