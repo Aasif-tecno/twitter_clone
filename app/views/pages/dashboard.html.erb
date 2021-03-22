@@ -17,20 +17,35 @@
             <strong><%= @user.fullname %> </Strong><br>
             <small>@<%= @user.username%></small>
           </div>
-        </div><br><br s>
-        <%= link_to "Follow", tweeets_path, class: "btn btn-primary" %>
+        </div><br><br>
+        <% if user_signed_in?%>
+          <% if current_user.followees.include?(@user) %>
+            <div class="d-flex justify-content-between">
+              <%= button_to "UnFollow", unfollow_user_path, method: "POST", class: "btn btn-danger" %>
+            <% 
+=begin%>
+ <%= button_to "Message", root_path, method: "POST", class: "btn btn-primary" %> 
+<%
+=end%>
+            </div>
+          <% else %>
+            <%= button_to "Follow", follow_user_path, method: "POST" , class: "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <%= button_to "Follow", follow_user_path, method: "POST" , class: "btn btn-primary" %>
+        <% end %>
       </div>
       <hr>
       <div class="ml-5 mr-5 mb-3">
         <div class="d-flex justify-content-between">
           <strong>Tweets</strong>
-          <strong>Following</strong>
           <strong>Followers</strong>
+          <strong>Following</strong>
         </div>
         <div class="d-flex justify-content-between">
-          <span><%= current_user.tweeets.count%></span>
-          <span>323</span>
-          <span>1.4m</span>
+          <span><%= @user.tweeets.count%></span>
+          <span><%= @user.followers.count %></span>
+          <span><%= @user.followees.count %></span>
         </div>
       </div> 
     </div> 

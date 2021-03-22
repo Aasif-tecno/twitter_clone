@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'pages#index'
   get 'user/:id', to: 'pages#dashboard', as: 'user'
   get '/search', to: 'pages#search', as: 'search'
+  post '/user/:id/follow', to: "follows#follow", as: "follow_user"
+  post '/user/:id/unfollow', to: "follows#unfollow", as: "unfollow_user"
   devise_for :users
   resources :tweeets
 
