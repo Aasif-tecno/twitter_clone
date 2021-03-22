@@ -1,7 +1,11 @@
 class PagesController < ApplicationController
   def index
     @tweeets = Tweeet.all.order(created_at: :desc)
-    @user = User.order(created_at: :desc).last(10)
+    if user_signed_in?
+      @user = User.where.not(id: current_user.id).order(created_at: :desc).last(10)
+    else
+      @user = User.order(created_at: :desc).last(10)
+    end
   end
 
   def dashboard

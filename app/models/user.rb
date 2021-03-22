@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :followers, through: :following_users
 
   def self.search(param)
-    param.strip!
+
     to_send_back = where("username like ? or email like ?", "%#{param}%", "%#{param}%")
     return nil unless to_send_back
     to_send_back
