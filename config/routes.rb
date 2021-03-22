@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   post '/user/:id/follow', to: "follows#follow", as: "follow_user"
   post '/user/:id/unfollow', to: "follows#unfollow", as: "unfollow_user"
   devise_for :users
-  resources :tweeets
+  delete 'tweeets/:tweeet_id/comment/:id', to: 'comments#destroy', as: "destroy_comment"
+  resources :tweeets do
+    resources :comments
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

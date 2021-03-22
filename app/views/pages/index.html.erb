@@ -28,11 +28,10 @@
                   </div>
                 <% end %><br>
               </div><hr>
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between px-3">
                 <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
                 <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
-                <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
-                <%= fa_icon "share" %>
+                <span><%= fa_icon "comments" %> &nbsp&nbsp <%= tweeet.comments.count%></span>
               </div>
             <% end %>
           </div>

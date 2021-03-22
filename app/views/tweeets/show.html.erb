@@ -22,17 +22,54 @@
       </div>
     <% end %><br>
     <small class="text-secondary text-right"><%= time_ago_in_words(@tweeet.created_at) %> ago</small><br><hr>
-    <div class="d-flex justify-content-between mt-3">
+    <div class="d-flex justify-content-between px-4 mt-3">
       <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
       <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
-      <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
-      <%= fa_icon "share" %>
+      <span><%= fa_icon "comments" %> &nbsp&nbsp <%= @tweeet.comments.count%></span>
     </div>
   </div>
 </div><br>
   <hr>
 <div>
-  <div class="card-body">
-    <div class="card-title"><h3>Comments</h3></div>    
-  </div>
+  <div class="card-body mb-5">
+    <div class="row d-flex justify-content-center mb-5">
+      <div class="col">
+        <div class="headings d-flex justify-content-between align-items-center mb-3">
+          <h3>Comments</h3>
+        </div>
+        <%= form_for([@tweeet,@comment]) do |f| %>
+          <div class="form-group">
+            <%= f.text_area :body, rows: 3, class: "form-control", placeholder: "Please enter a comment", autofocus: true %>
+          </div>
+          <div class="form-group">
+            <%= f.submit class: "btn btn-primary btn-lg" %>
+          </div>
+        <% end %>
+        <% @tweeet.comments.each do |comment| %>
+          <% if comment.body.present? %>
+            <div class="card p-3 mb-2 shadow">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="user d-flex flex-row align-items-center"> 
+                  <% if comment.user.avatar.present? %>
+                    <img src="<%= url_for(comment.user.avatar)%>" width="30" class="user-img rounded-circle mr-2">
+                  <%end%>
+                  <span><small> <%= link_to user_path(comment.user),class:"font-weight-bold text-primary" do %> <%= comment.user.fullname %><%end%></small></span> </div> <small> <%= time_ago_in_words(comment.created_at) %> ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <small class="font-weight-bold px-4"> <%= comment.body %></small>
+                  <div class="reply px-4 d-flex justify-content-between"> 
+                    <span>
+                      <% if current_user == comment.user %>
+                        <%= link_to "delete", destroy_comment_path(@tweeet, comment_id: comment.id),method: :delete , class: "btn btn-danger btn-sm"%>
+                      <% end %>
+                    </span>
+                  </div> 
+                </div>
+              </div>
+           <% end %>
+        <% end %>
+        </div>
+        
+    </div>
+
 </div>
