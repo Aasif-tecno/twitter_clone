@@ -2,7 +2,7 @@
   <div class="col-md-5">
     <div class="card card-index mb-3 shadow">
       <div class="card-header">
-          <h4>Profile</h4>
+        <h4>Profile</h4>
       </div>
       <div class="card-body">
         <div class="row">
@@ -22,11 +22,6 @@
           <% if current_user.followees.include?(@user) %>
             <div class="d-flex justify-content-between">
               <%= button_to "UnFollow", unfollow_user_path, method: "POST", class: "btn btn-danger" %>
-            <% 
-=begin%>
- <%= button_to "Message", root_path, method: "POST", class: "btn btn-primary" %> 
-<%
-=end%>
             </div>
           <% else %>
             <%= button_to "Follow", follow_user_path, method: "POST" , class: "btn btn-primary" %>
@@ -34,8 +29,7 @@
         <% else %>
           <%= button_to "Follow", follow_user_path, method: "POST" , class: "btn btn-primary" %>
         <% end %>
-      </div>
-      <hr>
+      </div><hr>
       <div class="ml-5 mr-5 mb-3">
         <div class="d-flex justify-content-between">
           <strong>Tweets</strong>
@@ -50,46 +44,55 @@
       </div> 
     </div> 
   </div>
-    <div class="col-md-7">
+  <div class="col-md-7">
     <div class="p-3">
       <% @tweeets.each do |tweeet| %>
-      <div class="mb-2">
-        <div class="card p-4 mt-2 card-index-tweets">
-        <div class="row col-md-8">
-          <div class="col-3">
-            <% if tweeet.user.avatar.present? %>
-              <div class="user-image-tweeet">
-                <%= image_tag tweeet.user.avatar %>
+        <div class="mb-2">
+          <div class="card p-4 mt-2 card-index-tweets">
+            <div class="row col-md-8">
+              <div class="col-3">
+                <% if tweeet.user.avatar.present? %>
+                  <div class="user-image-tweeet">
+                  <%= image_tag tweeet.user.avatar %>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
-          </div>
-          <div class="col-9">
-            <strong><%= tweeet.user.fullname %></strong><br>
-            <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small>
-          </div>
-        </div><hr>
+              <div class="col-9">
+                <strong><%= tweeet.user.fullname %></strong><br>
+                <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small>
+              </div>
+            </div><hr>
             <%= link_to tweeet_path(tweeet), class: "text-decoration-none text-dark" do %>
-                  <div class="card-body">
-                  <%= tweeet.tweeet %><br><br>
+              <div class="card-body">
+                <%= tweeet.tweeet %><br><br>
                   <% if tweeet.tweeet_image.present? %>
-                      <div class="mb-3 tweeet-image">
+                    <div class="mb-3 tweeet-image">
                       <%= image_tag(tweeet.tweeet_image) %>
-                      </div>
+                    </div>
                   <% end %><br><hr>
-                  <div class="d-flex justify-content-between mt-3">
-                      <span><%= fa_icon "heart" %> &nbsp&nbsp 33</span>
-                      <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
-                      <span><%= fa_icon "comments" %> &nbsp&nbsp 43</span>
-                      <%= fa_icon "share" %>
-                  </div>
-                  </div>
-              </div>
+                <% end %>
+                <div class="d-flex justify-content-between ">
+                  <span>
+                    <% if user_signed_in? %> 
+                      <% if tweeet.liked?(current_user)%>
+                        <%= link_to unlike_path(tweeet), method: :delete  do %> <%= fa_icon "heart" %><%end%>
+                      <% else %>
+                        <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>
+                      <% end %>
+                    <% end %>
+                    &nbsp&nbsp <%= tweeet.likes.count%>
+                  </span>
+                  <span><%= fa_icon "retweet" %> &nbsp&nbsp 0</span>
+                  <span>
+                    <%= link_to tweeet_path(tweeet),class: "text-decoration-none" do%>
+                      <%= fa_icon "comments" %>
+                    <% end %> &nbsp&nbsp <%= tweeet.comments.count%>
+                  </span>
+                </div>
+              </div> 
             <% end %>
-        
-        <hr>
-      </div>
-    <% end %>
-    </div>
+          </div>
+        </div>
+
+    </div> 
   </div>
-  
-</div>

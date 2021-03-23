@@ -26,22 +26,26 @@
                   <div class="mb-3 tweeet-image">
                     <%= image_tag(tweeet.tweeet_image) %>
                   </div>
-                <% end %><br>
-              </div><hr>
-               <div class="d-flex justify-content-between px-4 mt-3">
-                <span>
-                <% if user_signed_in? %> 
-                  <% if tweeet.liked?(current_user)%>
-                    <%= link_to unlike_path(tweeet), method: :delete do %> <%= fa_icon "heart" %><%end%>
-                  <% else %>
-                    <%= link_to like_path(tweeet), method: "put" do %> <%= fa_icon "heart" %><%end%>
-                  <% end %>
                 <% end %>
-                  &nbsp&nbsp <%= tweeet.likes.count%></span>
-                <span><%= fa_icon "retweet" %> &nbsp&nbsp 24</span>
-                <span><%= fa_icon "comments" %> &nbsp&nbsp <%= tweeet.comments.count%></span>
-              </div>
+              </div><hr>
             <% end %>
+              <div class="d-flex justify-content-between ">
+                <span>
+                  <% if user_signed_in? %> 
+                    <% if tweeet.liked?(current_user)%>
+                      <%= link_to unlike_path(tweeet), method: :delete  do %> <%= fa_icon "heart" %><%end%>
+                    <% else %>
+                      <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>
+                    <% end %>
+                  <% end %>
+                    &nbsp&nbsp <%= tweeet.likes.count%></span>
+                <span><%= fa_icon "retweet" %> &nbsp&nbsp 0</span>
+                <span>
+                  <%= link_to tweeet_path(tweeet),class: "text-decoration-none" do%>
+                    <%= fa_icon "comments" %>
+                  <%end%> &nbsp&nbsp <%= tweeet.comments.count%>
+                </span>
+              </div>
           </div>
         </div>
       <% end %>
