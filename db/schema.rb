@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_123338) do
+ActiveRecord::Schema.define(version: 2021_03_23_062206) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 2021_03_22_123338) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "follows", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followee_id"
@@ -74,6 +81,16 @@ ActiveRecord::Schema.define(version: 2021_03_22_123338) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tweeet_id"], name: "index_likes_on_tweeet_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "conversation_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "tweeets", force: :cascade do |t|

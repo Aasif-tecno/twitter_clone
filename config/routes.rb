@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   delete 'tweeets/:id/unlike', to: 'likes#destroy', as: "unlike"
   resources :tweeets do
     resources :comments
+  end 
+  resources :conversations do
+    resources :messages
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

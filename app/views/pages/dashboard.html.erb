@@ -22,6 +22,7 @@
           <% if current_user.followees.include?(@user) %>
             <div class="d-flex justify-content-between">
               <%= button_to "UnFollow", unfollow_user_path, method: "POST", class: "btn btn-danger" %>
+              <%= button_to "Message", conversations_path(sender_id: current_user.id,recipient_id: @user.id), method: "POST" , class: "btn btn-primary" %>
             </div>
           <% else %>
             <%= button_to "Follow", follow_user_path, method: "POST" , class: "btn btn-primary" %>
@@ -49,7 +50,7 @@
       <% @tweeets.each do |tweeet| %>
         <div class="mb-2">
           <div class="card p-3 mt-2 card-index-tweets">
-            <div class="row col-md-5">
+            <div class="row col-md-8">
               <div class="col-4">
                 <% if tweeet.user.avatar.present? %>
                   <div class="user-image-tweeet">

@@ -1,0 +1,64 @@
+<%= link_to "Back", conversations_path, class: "btn btn-primary" %>
+<div class="row rounded-lg overflow-hidden shadow mt-5 mb-5">
+  <div class="col-12 px-0">
+    <div class="bg-white">
+      <div class="bg-primary px-4 py-2">
+         <% if @conversation.sender_id == current_user.id %>
+            <% recipient = User.find(@conversation.recipient_id)%>
+          <% else %>
+            <% recipient = User.find(@conversation.sender_id)%>
+          <% end %>
+          <%= link_to user_path(recipient) do %>
+            <p class="h5 mb-0 py-1 text-white"><%= recipient.fullname%></p>
+          <% end %>
+      </div>
+      <!-- Chat Box-->
+      <div class="px-0 ">
+        <div class="px-4 py-5 chat-box bg-white">
+          <% if @over_ten %>
+            <div class="text-center mb-3">
+              <%= link_to "Show privious", '?m=all', class: "badge badge-primary" %>
+            </div>
+          <% end %>
+            <% @messages.each do |message| %>
+              <% if message.body.present?%>
+                <% if message.user_id == current_user.id %>
+                    <!-- Reciever Message-->
+                    <div class="media w-50 ml-auto mb-3">
+                      <div class="media-body">
+                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                        <p class="text-small mb-0 text-white"><%= message.body%></p>
+                        </div>
+                        <p class="small text-muted"><%= message.created_at.strftime("%d/%m/%y at %l:%M %p")%></p>
+                      </div>
+                    </div>
+                <% else %>
+                <!-- Sender Message-->
+                    <div class="media w-50 mb-3">
+                      <div class="media-body ml-3">
+                        <div class="bg-light rounded py-2 px-3 mb-2">
+                        <p class="text-small mb-0 text-muted"><%= message.body%></p>
+                        </div>
+                        <p class="small text-muted"><%= message.created_at.strftime("%d/%m/%y at %l:%M %p")%></p>
+                      </div>
+                    </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            <!-- Typing area -->
+           <div class="bg-light">
+              <%= form_for([@conversation,@message]) do |f| %>
+            <div class="input-group">
+                <%= f.text_field :body, class: "form-control rounded-0 border-0 py-4 bg-light" ,placeholder:"Type a message"%>
+                <%= f.text_field :user_id, value: current_user.id, type: "hidden"%>
+                <div class="input-group-append">
+                  <%= f.submit "send", class: "btn btn-primary"%>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
