@@ -12,7 +12,6 @@ class TweeetsController < ApplicationController
   # GET /tweeets/1 or /tweeets/1.json
   def show
     @comment = @tweeet.comments.build
-    @user = @comment.user
   end
 
   # GET /tweeets/new

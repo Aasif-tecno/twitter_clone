@@ -13,10 +13,22 @@
                 <% end %>
               </div>
               <div class="col-8">
-                <%= link_to  user_path(tweeet.user.id), class: "text-decoration-none text-dark" do %>
-                  <strong><%= tweeet.user.fullname %></strong><br>
-                <% end %>
-                  <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
+                <% if user_signed_in?%>
+                  <% if tweeet.user == current_user %> 
+                    <%= link_to  tweeets_path, class: "text-decoration-none text-dark" do %>
+                      <strong><%= tweeet.user.fullname %></strong><br>
+                    <% end  %>
+                  <% else %>
+                    <%= link_to  user_path(tweeet.user.id), class: "text-decoration-none text-dark" do %>
+                      <strong><%= tweeet.user.fullname %></strong><br>
+                    <% end  %>
+                  <% end %> 
+                <% else %>
+                  <%= link_to  user_path(tweeet.user.id), class: "text-decoration-none text-dark" do %>
+                    <strong><%= tweeet.user.fullname %></strong><br>
+                  <% end  %> 
+                <% end %> 
+                <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
               </div>
             </div><hr>
             <%= link_to tweeet_path(tweeet), class: "text-decoration-none text-dark" do %>
@@ -29,7 +41,7 @@
                 <% end %>
               </div><hr>
             <% end %>
-              <div class="d-flex justify-content-between px-5">
+              <div class="d-flex justify-content-between px-2">
                 <span>
                   <% if user_signed_in? %> 
                     <% if tweeet.liked?(current_user)%>
