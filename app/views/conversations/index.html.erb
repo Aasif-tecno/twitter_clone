@@ -23,7 +23,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-1">
                             <h6 class="mb-0"><%= recipient.fullname%></h6>
                         <% if  conversation.messages.last.present? %>          
-                          <small class="small font-weight-bold"><%= conversation.messages.last.created_at.strftime("%d/%m/%y at %l:%M %p") %></small>
+                          <small class="small font-weight-bold"><%= time_ago_in_words(conversation.messages.last.created_at) %></small>
                         <% end %>
                         </div>
                         <% if  conversation.messages.last.present? %>          

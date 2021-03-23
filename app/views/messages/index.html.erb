@@ -1,7 +1,10 @@
-<%= link_to "Back", conversations_path, class: "btn btn-primary" %>
-<div class="row rounded-lg overflow-hidden shadow mt-5 mb-5">
+<div class="d-flex justify-content-between mt-5 mb-2">
+  <%= link_to "Refresh", conversation_messages_path(@conversation), class: "btn btn-info" %>
+  <%= link_to "Back", conversations_path, class: "btn btn-primary" %>
+</div>
+<div class="row rounded-lg overflow-hidden shadow mb-5">
   <div class="col-12 px-0">
-    <div class="bg-white">
+    <div class="bg-light">
       <div class="bg-primary px-4 py-2">
          <% if @conversation.sender_id == current_user.id %>
             <% recipient = User.find(@conversation.recipient_id)%>
@@ -29,7 +32,8 @@
                         <div class="bg-primary rounded py-2 px-3 mb-2">
                         <p class="text-small mb-0 text-white"><%= message.body%></p>
                         </div>
-                        <p class="small text-muted"><%= message.created_at.strftime("%d/%m/%y at %l:%M %p")%></p>
+                        <p class="small text-muted"><%= message.message_time%>
+                        <%= link_to "Delete", conversation_message_path(@conversation,message), method: :delete, class: "float-right text-danger", data: { confirm: "Are you sure"} %></p>
                       </div>
                     </div>
                 <% else %>
@@ -39,7 +43,7 @@
                         <div class="bg-light rounded py-2 px-3 mb-2">
                         <p class="text-small mb-0 text-muted"><%= message.body%></p>
                         </div>
-                        <p class="small text-muted"><%= message.created_at.strftime("%d/%m/%y at %l:%M %p")%></p>
+                        <p class="small text-muted"><%= message.message_time%></p>
                       </div>
                     </div>
                 <% end %>
