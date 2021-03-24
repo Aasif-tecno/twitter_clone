@@ -8,9 +8,14 @@ class FollowsController < ApplicationController
     end
     def unfollow
         @user = User.find(params[:id])
-        current_user.followed_users.find_by(followee_id: 
-            @user.id).destroy
+        current_user.followed_users.find_by(followee_id: @user.id).destroy
         redirect_to user_path(@user)
     end
+
+    def followers
+        @user = User.find(params[:id])
+
+    end
+
 
 end

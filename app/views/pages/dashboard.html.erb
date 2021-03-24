@@ -22,6 +22,7 @@
           <% if current_user.followees.include?(@user) %>
             <div class="d-flex justify-content-between">
               <%= button_to "UnFollow", unfollow_user_path, method: "POST", class: "btn btn-danger" %>
+              
               <%= button_to "Message", conversations_path(sender_id: current_user.id,recipient_id: @user.id), method: "POST" , class: "btn btn-primary" %>
             </div>
           <% else %>
@@ -44,6 +45,48 @@
         </div>
       </div> 
     </div> 
+    <div class="card card-index shadow p-3">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="true">Followers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="false">Following</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="followers" role="tabpanel" aria-labelledby="followers-tab">
+          <% @user.followers.each do |follower| %>
+            <ul class="list-group">
+              <% if follower == current_user %> 
+                <%= link_to  tweeets_path, class: "text-decoration-none text-dark" do %>
+                  <li class="list-group-item"><%= follower.fullname%></li>                  
+                <% end %>
+              <% else %>
+                <%= link_to user_path(follower), class: "text-decoration-none text-dark"  do  %>
+                  <li class="list-group-item"><%= follower.fullname%></li>
+                <% end %>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+        <div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
+          <% @user.followees.each do |follower| %>
+            <ul class="list-group">
+              <% if follower == current_user %> 
+                <%= link_to  tweeets_path, class: "text-decoration-none text-dark" do %>
+                  <li class="list-group-item"><%= follower.fullname%></li>                  
+                <% end %>
+              <% else %>
+                <%= link_to user_path(follower), class: "text-decoration-none text-dark"  do  %>
+                  <li class="list-group-item"><%= follower.fullname%></li>
+                <% end %>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-md-7">
     <div class="p-1">
@@ -91,9 +134,10 @@
                   </span>
                 </div>
               </div> 
-            <% end %>
+            </div>
           </div>
         </div>
-
+      <% end %>
     </div> 
   </div>
+</div>

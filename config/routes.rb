@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/search', to: 'pages#search', as: 'search'
   post '/user/:id/follow', to: "follows#follow", as: "follow_user"
   post '/user/:id/unfollow', to: "follows#unfollow", as: "unfollow_user"
+  get '/user/:id/followers', to: "follows#followers", as: "user_followers"
   devise_for :users
   delete 'tweeets/:tweeet_id/comment/:id', to: 'comments#destroy', as: "destroy_comment"
   put 'tweeets/:id/like', to: 'likes#create', as: "like"
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
   end 
   resources :conversations do
     resources :messages
+    put '/read', to: "messages#read"
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

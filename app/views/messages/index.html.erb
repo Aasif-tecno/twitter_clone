@@ -1,8 +1,8 @@
 <div class="d-flex justify-content-between mt-5 mb-2">
-  <%= link_to "Refresh", conversation_messages_path(@conversation), class: "btn btn-info" %>
+  <%= link_to "Refresh", request.referrer, class: "btn btn-info" %>
   <%= link_to "Back", conversations_path, class: "btn btn-primary" %>
 </div>
-<div class="row rounded-lg overflow-hidden shadow mb-5">
+<div class="row rounded-lg overflow-hidden shadow m-1">
   <div class="col-12 px-0">
     <div class="bg-light">
       <div class="bg-primary px-4 py-2">
@@ -40,8 +40,8 @@
                 <!-- Sender Message-->
                     <div class="media w-50 mb-3">
                       <div class="media-body ml-3">
-                        <div class="bg-light rounded py-2 px-3 mb-2">
-                        <p class="text-small mb-0 text-muted"><%= message.body%></p>
+                        <div class="bg-light rounded py-2 px-3 mb-2 border">
+                        <p class="text-small mb-0 text-dark"><%= message.body%></p>
                         </div>
                         <p class="small text-muted"><%= message.message_time%></p>
                       </div>
@@ -50,9 +50,9 @@
               <% end %>
             <% end %>
             <!-- Typing area -->
-           <div class="bg-light">
+           <div class="bg-light" id="input-bar">
               <%= form_for([@conversation,@message]) do |f| %>
-            <div class="input-group">
+            <div class="input-group border">
                 <%= f.text_field :body, class: "form-control rounded-0 border-0 py-4 bg-light" ,placeholder:"Type a message"%>
                 <%= f.text_field :user_id, value: current_user.id, type: "hidden"%>
                 <div class="input-group-append">

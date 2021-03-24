@@ -1,3 +1,16 @@
+  <div class="toast" style="position: absolute; top: 0; right: 0;">
+    <div class="toast-header">
+      <img src="..." class="rounded mr-2" alt="...">
+      <strong class="mr-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
 <div class="row rounded-lg overflow-hidden shadow mt-5 mb-5">
   <div class="col-12 px-0">
     <div class="bg-white">
@@ -14,14 +27,20 @@
                 <% recipient = User.find(conversation.sender_id)%>
               <% end %>
               <% unless current_user.id == recipient.id %>
-                <%= link_to conversation_messages_path(conversation), class:"list-group-item list-group-item-action list-group-item-light rounded-0" do %>
+                  <%= link_to conversation_read_path(conversation), class:"list-group-item list-group-item-action list-group-item-light rounded-0", method: :put do %>
                     <div class="media">
                     <% if recipient.avatar.present? %>
                       <img src="<%= url_for(recipient.avatar)%>" alt="user" width="50" class="rounded-circle">
                     <% end %>
                     <div class="media-body ml-4">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                            <h6 class="mb-0"><%= recipient.fullname%></h6>
+                            <h6 class="mb-0"><%= recipient.fullname%>
+                            <% if notification_message(conversation.id) > 0%>
+                              <div class="badge badge-primary">
+                                <%= notification_message(conversation.id)%>
+                              </div>
+                            <% end %>
+                            </h6>
                         <% if  conversation.messages.last.present? %>          
                           <small class="small font-weight-bold"><%= time_ago_in_words(conversation.messages.last.created_at) %></small>
                         <% end %>
@@ -31,7 +50,7 @@
                         <% end %>
                     </div>
                     </div>
-                <% end %>
+                  <% end %>
               <% end %>
             <% end %>
           <% end %>

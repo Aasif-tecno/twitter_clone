@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+
   def self.search(param)
     to_send_back = where("username like ? or email like ?", "%#{param}%", "%#{param}%")
     return nil unless to_send_back

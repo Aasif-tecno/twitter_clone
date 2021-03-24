@@ -15,9 +15,15 @@
     <ul class="navbar-nav ml-auto">
     <% if user_signed_in? %>
       <li class="nav-item">
-        <%= link_to "Messages", conversations_path, class: "nav-link"  %>
+          <%= link_to conversations_path, class: "nav-link" do  %>
+           Messages 
+            <% if notification.count > 0 %> 
+              <span class="badge badge-success"><%= notification.count%> </span>
+            <% end %>
+          <% end %>
       </li>
       <li class="nav-item">
+     
         <%= link_to "Dashboard", tweeets_path, class: "nav-link"  %>
       </li>
       <li class="nav-item">
