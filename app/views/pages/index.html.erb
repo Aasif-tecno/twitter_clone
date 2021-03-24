@@ -49,6 +49,8 @@
                     <% else %>
                       <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>
                     <% end %>
+                  <% else %>
+                    <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>                  
                   <% end %>
                     &nbsp&nbsp <%= tweeet.likes.count%></span>
                 <span><%= fa_icon "retweet" %> &nbsp&nbsp 0</span>

@@ -1,4 +1,5 @@
 class LikesController < ApplicationController
+before_action :authenticate_user! 
   def create
     @tweeet = Tweeet.find(params[:id])
     @like = @tweeet.likes.create(user_id: current_user.id)
