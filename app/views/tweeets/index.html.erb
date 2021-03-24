@@ -134,7 +134,7 @@
                     <% end %>
                   </div>
                   <div>
-                    <%= link_to tweeet_path(tweeet), method: :delete do %>
+                    <%= link_to tweeet_path(tweeet), method: :delete, data: { confirm: "Are you sure"} do %>
                     <%= fa_icon "trash" ,class: "btn btn-danger"%>
                     <% end %>
                   </div>
@@ -159,7 +159,6 @@
           </div>
         </div>
       <% end %>
-      </div>
+    </div>
   </div>
-  
 </div>
