@@ -1,5 +1,5 @@
-<div class="d-flex justify-content-between mt-5 mb-4 px-3">
-  <%= link_to  request.referrer do %>
+<div class="d-flex justify-content-between mt-1 mb-4 px-3">
+  <%= link_to  conversation_messages_path(@conversation) do %>
     <%= fa_icon "refresh" , class: "btn btn-warning"%>
   <% end %>
   <%= link_to conversations_path do %>
@@ -20,13 +20,14 @@
           <% end %>
       </div>
       <!-- Chat Box-->
-      <div class="px-0 ">
+      <div class="px-0">
         <div class="px-4 py-5 chat-box bg-white">
-          <% if @over_ten %>
-            <div class="text-center mb-3">
-              <%= link_to "Show privious", '?m=all', class: "badge badge-primary" %>
-            </div>
-          <% end %>
+          <div class="message-scroll">
+            <% if @over_fifteen %>
+              <div class="text-center mb-3">
+                <%= link_to "Show privious", '?m=all', class: "badge badge-primary" %>
+              </div>
+            <% end %>
             <% @messages.each do |message| %>
               <% if message.body.present?%>
                 <% if message.user_id == current_user.id %>
@@ -53,17 +54,18 @@
                 <% end %>
               <% end %>
             <% end %>
-            <!-- Typing area -->
-           <div class="bg-light" id="input-bar">
-              <%= form_for([@conversation,@message]) do |f| %>
-            <div class="input-group border">
+          </div>
+          <!-- Typing area -->
+          <div class="bg-light" id="input-bar">
+            <%= form_for([@conversation,@message]) do |f| %>
+              <div class="input-group border">
                 <%= f.text_field :body, class: "form-control rounded-0 border-0 py-4 bg-light" ,placeholder:"Type a message"%>
                 <%= f.text_field :user_id, value: current_user.id, type: "hidden"%>
                 <div class="input-group-append">
                   <%= f.submit "send", class: "btn btn-primary"%>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

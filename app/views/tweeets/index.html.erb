@@ -1,3 +1,4 @@
+
 <div class="row mt-4">
   <div class="col-md-5">
     <div class="card card-index mb-3 shadow">
@@ -36,17 +37,106 @@
         </div>
       </div>
     </div>
+    
+  </div>
+  <div class="col-md-7">
     <div class="card card-index shadow p-3">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="true">Followers</a>
+          <a class="nav-link active" id="newtweet-tab" data-toggle="tab" href="#newtweet" role="tab" aria-controls="newtweet" aria-selected="false">New Tweet</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" id="tweets-tab" data-toggle="tab" href="#tweets" role="tab" aria-controls="tweets" aria-selected="false">Tweeets</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="true">Followers</a>
+        </li>
+       <li class="nav-item">
           <a class="nav-link" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="false">Following</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="followers" role="tabpanel" aria-labelledby="followers-tab">
+        <div class="tab-pane fade show active" id="newtweet" role="tabpanel" aria-labelledby="newtweet-tab">
+          <div class="p-3">
+            <%= form_with(model: @tweeet) do |form| %>
+              <div class="form-group">
+                <%= form.rich_text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
+              </div>
+              <div class="form-group">
+                <%= form.file_field :tweeet_image, class: "form-control-file"%>
+              </div>
+              <div class="form-group">
+                <%= form.submit "Tweet", class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="tweets" role="tabpanel" aria-labelledby="tweets-tab">
+          <div class="scroll">
+            <% @tweeets.each do |tweeet| %>
+              <div class="mb-3">
+                <div class="card p-4 mt-2 card-index-tweets">
+                  <div class="row col-md-8">
+                    <div class="col-3">
+                      <% if tweeet.user.avatar.present? %>
+                        <div class="user-image-tweeet">
+                          <%= image_tag tweeet.user.avatar %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <div class="col-9">
+                      <strong><%= tweeet.user.fullname %></strong><br>
+                      <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
+                    </div>
+                  </div><hr>
+                  <div class="card-body">
+                    <%= tweeet.tweeet %><br><br>
+                    <% if tweeet.tweeet_image.present? %>
+                      <div class="mb-3 tweeet-image">
+                        <%= image_tag(tweeet.tweeet_image) %>
+                      </div>
+                    <% end %><br>
+                    <%if @tweeet.user = current_user %>
+                      <div class="d-flex justify-content-around mt-3">
+                        <div>
+                          <%= link_to tweeet_path(tweeet) do %>
+                          <%= fa_icon "paragraph" ,class: "btn btn-primary"%>
+                          <% end %>
+                        </div>
+                        <div>
+                          <%= link_to edit_tweeet_path(tweeet) do %>
+                          <%= fa_icon "pencil" ,class: "btn btn-warning"%>
+                          <% end %>
+                        </div>
+                        <div>
+                          <%= link_to tweeet_path(tweeet), method: :delete, data: { confirm: "Are you sure"} do %>
+                          <%= fa_icon "trash" ,class: "btn btn-danger"%>
+                          <% end %>
+                        </div>
+                      </div>
+                    <%end %><hr>
+                    <div class="d-flex justify-content-around">
+                      <span>
+                        <% if tweeet.liked?(current_user)%>
+                          <%= link_to unlike_path(tweeet), method: :delete  do %> <%= fa_icon "heart" %><%end%>
+                        <% else %>
+                          <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>
+                        <% end %>
+                          &nbsp <%= tweeet.likes.count%></span>
+                      <span><%= fa_icon "retweet" %> &nbsp 0</span>
+                      <span>
+                        <%= link_to tweeet_path(tweeet),class: "text-decoration-none" do%>
+                          <%= fa_icon "comments" %>
+                        <%end%> &nbsp <%= tweeet.comments.count%>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers-tab">
           <% current_user.followers.each do |follower| %>
             <ul class="list-group">
               <% if follower == current_user %> 
@@ -78,87 +168,11 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-7">
     <div class="card card-trends shadow mb-3">   
-      <div class="p-3">
-        <% if user_signed_in? %>
-          <%= form_with(model: @tweeet) do |form| %>
-            <div class="form-group">
-              <%= form.rich_text_area :tweeet, class: "form-control", placeholder: "tweet about it"%>
-            </div>
-            <div class="form-group">
-              <%= form.file_field :tweeet_image, class: "form-control-file"%>
-            </div>
-            <div class="form-group">
-              <%= form.submit "Tweet", class: "btn btn-primary" %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+      
     </div>
     <div class="p-1">
-      <% @tweeets.each do |tweeet| %>
-        <div class="mb-3">
-          <div class="card p-4 mt-2 card-index-tweets">
-            <div class="row col-md-8">
-              <div class="col-3">
-                <% if tweeet.user.avatar.present? %>
-                  <div class="user-image-tweeet">
-                    <%= image_tag tweeet.user.avatar %>
-                  </div>
-                <% end %>
-              </div>
-              <div class="col-9">
-                <strong><%= tweeet.user.fullname %></strong><br>
-                <small>@<%= tweeet.user.username %> - <span class="text-secondary mb-0"><%= time_ago_in_words(tweeet.created_at) %> ago</span></small><br>
-              </div>
-            </div><hr>
-            <div class="card-body">
-              <%= tweeet.tweeet %><br><br>
-              <% if tweeet.tweeet_image.present? %>
-                <div class="mb-3 tweeet-image">
-                  <%= image_tag(tweeet.tweeet_image) %>
-                </div>
-              <% end %><br>
-              <%if @tweeet.user = current_user %>
-                <div class="d-flex justify-content-between mt-3">
-                  <div>
-                    <%= link_to tweeet_path(tweeet) do %>
-                    <%= fa_icon "paragraph" ,class: "btn btn-primary"%>
-                    <% end %>
-                  </div>
-                  <div>
-                    <%= link_to edit_tweeet_path(tweeet) do %>
-                    <%= fa_icon "pencil" ,class: "btn btn-warning"%>
-                    <% end %>
-                  </div>
-                  <div>
-                    <%= link_to tweeet_path(tweeet), method: :delete, data: { confirm: "Are you sure"} do %>
-                    <%= fa_icon "trash" ,class: "btn btn-danger"%>
-                    <% end %>
-                  </div>
-                </div>
-              <%end %><hr>
-              <div class="d-flex justify-content-between px-2">
-                <span>
-                  <% if tweeet.liked?(current_user)%>
-                    <%= link_to unlike_path(tweeet), method: :delete  do %> <%= fa_icon "heart" %><%end%>
-                  <% else %>
-                    <%= link_to like_path(tweeet), method: :put,class:"text-dark" do %> <%= fa_icon "heart" %><%end%>
-                  <% end %>
-                    &nbsp&nbsp <%= tweeet.likes.count%></span>
-                <span><%= fa_icon "retweet" %> &nbsp&nbsp 0</span>
-                <span>
-                  <%= link_to tweeet_path(tweeet),class: "text-decoration-none" do%>
-                    <%= fa_icon "comments" %>
-                  <%end%> &nbsp&nbsp <%= tweeet.comments.count%>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      
     </div>
   </div>
 </div>

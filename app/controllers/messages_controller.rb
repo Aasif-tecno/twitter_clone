@@ -3,12 +3,12 @@ class MessagesController < ApplicationController
 
   def index
   @messages = @conversation.messages
-    if @messages.length > 10
-        @over_ten = true
-        @messages = @messages[-10..-1]
+    if @messages.length > 15
+        @over_fifteen = true
+        @messages = @messages.last(15) # @messages[-10..-1]
     end
     if params[:m]
-        @over_ten = false
+        @over_fifteen = false
         @messages = @conversation.messages
     end
   @message = @conversation.messages.build
@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
 
   def read
     notify = Notification.where(conversation_id: params[:conversation_id])
-    notify.update_all(read: true)
+    notify.destroy_all
     redirect_to conversation_messages_path(@conversation)
   end
 

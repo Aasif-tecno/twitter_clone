@@ -1,6 +1,6 @@
 <div class="row mt-5">
   <div class="col-md-9">
-    <div>
+    <div class="scroll">
       <% @tweeets.each do |tweeet| %>
         <div class="mb-4">
           <div class="card p-4 card-index-tweets">
@@ -41,7 +41,7 @@
                 <% end %>
               </div><hr>
             <% end %>
-              <div class="d-flex justify-content-between px-2">
+              <div class="d-flex justify-content-around">
                 <span>
                   <% if user_signed_in? %> 
                     <% if tweeet.liked?(current_user)%>
