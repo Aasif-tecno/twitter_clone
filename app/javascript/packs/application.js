@@ -15,3 +15,12 @@ ActiveStorage.start()
 
 require("trix")
 require("@rails/actiontext")
+
+// scroll_bottom = function(){
+//     messages = document.getElementById('messages')
+//     messages.scrollTo(0,document.body.scrollHeight);
+//   }
+
+// document.on('turbolinks:load', function() {
+//     scroll_bottom();
+//   })

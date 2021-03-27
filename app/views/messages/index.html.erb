@@ -22,13 +22,20 @@
       <!-- Chat Box-->
       <div class="px-0">
         <div class="px-4 py-5 chat-box bg-white">
-          <div class="message-scroll">
+          <div class="message-scroll" id="messages">
             <% if @over_fifteen %>
               <div class="text-center mb-3">
                 <%= link_to "Show privious", '?m=all', class: "badge badge-primary" %>
               </div>
             <% end %>
+            <% @date = []%>
             <% @messages.each do |message| %>
+              <% if !message.created_at.nil? %>
+                <% unless @date.include? message.created_at.to_date %>
+                  <% @date << message.created_at.to_date  %>
+                  <div class="main-divider mb-3"><h6 class="inner-divider"><span><%= message_date(message) %></span></h6></div>
+                <% end %>
+              <% end %>
               <% if message.body.present?%>
                 <% if message.user_id == current_user.id %>
                     <!-- Reciever Message-->
@@ -59,7 +66,7 @@
           <div class="bg-light" id="input-bar">
             <%= form_for([@conversation,@message]) do |f| %>
               <div class="input-group border">
-                <%= f.text_field :body, class: "form-control rounded-0 border-0 py-4 bg-light" ,placeholder:"Type a message"%>
+                <%= f.text_field :body, class: "form-control rounded-0 border-0 py-4 bg-light" ,placeholder:"Type a message", autofocus: true%>
                 <%= f.text_field :user_id, value: current_user.id, type: "hidden"%>
                 <div class="input-group-append">
                   <%= f.submit "send", class: "btn btn-primary"%>
@@ -72,3 +79,7 @@
     </div>
   </div>
 </div>
+<script>
+var messages = document.getElementById("messages");
+    messages.scrollTop = messages.scrollHeight;
+</script>
